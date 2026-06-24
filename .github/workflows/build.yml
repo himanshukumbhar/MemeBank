@@ -28,6 +28,10 @@ jobs:
           mv main_backup.dart lib/main.dart
           mv pubspec_backup.yaml pubspec.yaml
 
+      - name: Fix minSdkVersion for AdMob
+        run: |
+          sed -i 's/minSdkVersion .*/minSdkVersion 21/' android/app/build.gradle
+
       - name: Get Dependencies
         run: flutter pub get
 
