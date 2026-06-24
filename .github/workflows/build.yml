@@ -19,6 +19,15 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
+      - name: Recreate Flutter Project Structure
+        run: |
+          mv main.dart main_backup.dart
+          mv pubspec.yaml pubspec_backup.yaml
+          flutter create . --project-name=memebank --platforms=android
+          rm lib/main.dart
+          mv main_backup.dart lib/main.dart
+          mv pubspec_backup.yaml pubspec.yaml
+
       - name: Get Dependencies
         run: flutter pub get
 
