@@ -32,9 +32,14 @@ jobs:
         run: |
           sed -i 's/minSdkVersion .*/minSdkVersion 21/' android/app/build.gradle
 
-      - name: Upgrade Kotlin Version
+      - name: Fix Kotlin Gradle Plugin Version
         run: |
-          sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' android/build.gradle
+          if [ -f android/settings.gradle ]; then
+            sed -i 's/id "org.jetbrains.kotlin.android" version .*/id "org.jetbrains.kotlin.android" version "1.9.0" apply false/' android/settings.gradle
+          fi
+          if [ -f android/build.gradle ]; then
+            sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' android/build.gradle
+          fi
 
       - name: Get Dependencies
         run: flutter pub get
