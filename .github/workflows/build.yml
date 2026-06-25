@@ -41,6 +41,13 @@ jobs:
             sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' android/build.gradle
           fi
 
+      - name: Add AdMob App ID to AndroidManifest
+        run: |
+          MANIFEST_PATH="android/app/src/main/AndroidManifest.xml"
+          REAL_APP_ID="ca-app-pub-7157971751129903~1285422815"
+          META_DATA="<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\" android:value=\"$REAL_APP_ID\"/>"
+          sed -i "s|<application|<application>\n        $META_DATA|" $MANIFEST_PATH
+
       - name: Get Dependencies
         run: flutter pub get
 
